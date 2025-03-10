@@ -1,15 +1,10 @@
-import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import User from "../model/user.model.ts";
+import User from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.ts";
+import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
 
-export const createUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<any> => {
+export const createUser = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
 
@@ -28,7 +23,7 @@ export const createUser = async (
       session,
     });
 
-    const token = jwt.sign({ userId: newUsers[0]._id }, JWT_SECRET as string);
+    const token = jwt.sign({ userId: newUsers[0]._id }, JWT_SECRET);
 
     res.status(201).json({
       message: "User created successfully",
@@ -44,17 +39,15 @@ export const createUser = async (
   }
 };
 
-export const loginUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<any> => {
-  const { email, password } = req.body;
-
+export const loginUser = async (req, res, next) => {
   try {
+    const { email, password } = req.body;
     const user = await User.findOne({ email });
+
     if (!user) {
-      return res.status(404).json({ message: "User does not exist" });
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -62,7 +55,7 @@ export const loginUser = async (
       return res.status(401).json({ message: "Incorrect password" });
     }
 
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET as string);
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET);
 
     res.status(200).json({
       message: "User logged in successfully",

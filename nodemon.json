@@ -1,7 +1,0 @@
-{
-  "watch": ["src"],
-  "ext": "ts",
-  "verbose": true,
-  "ignore": ["node_modules/**", "dist/**"],
-  "exec": "node --loader ts-node/esm src/server.ts"
-}

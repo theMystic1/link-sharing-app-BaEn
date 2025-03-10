@@ -113,10 +113,19 @@
   "include": [
     "src/types.d.ts",
     "src/**/*.ts",
-    "src/model/user.model.ts",
-    "src/middlewares/auth.middleware.ts",
-    "src/routes/auth.routes.ts",
-    "src/routes/links.routes.ts",
-    "src/routes/user.routes.ts"
+    "src/model/user.model.js",
+    "src/middlewares/auth.middleware.js",
+    "src/routes/auth.routes.js",
+    "src/routes/links.routes.js",
+    "src/routes/user.routes.js",
+    "src/server.js",
+    "src/model/links.model.js",
+    "src/controllers/user.controller.js",
+    "src/controllers/links.controller.js",
+    "src/middlewares/error.middleware.js",
+    "src/config/env.js",
+    "src/config/util.js",
+    "src/controllers/auth.controller.js",
+    "src/config/database.js"
   ]
 }

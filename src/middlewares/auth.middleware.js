@@ -1,13 +1,8 @@
-import { NextFunction, Request, Response } from "express";
 import { JWT_SECRET } from "../config/env.js";
 import User from "../model/user.model.js";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-export const authorize = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<any> => {
+export const authorize = async (req, res, next) => {
   let token;
 
   try {
@@ -22,7 +17,7 @@ export const authorize = async (
       return res.status(401).json({ success: false, message: "Unauthorized." });
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET || "secret") as JwtPayload;
+    const decoded = jwt.verify(token, JWT_SECRET || "secret");
 
     const user = await User.findById(decoded.userId);
 
@@ -32,7 +27,7 @@ export const authorize = async (
 
     req.user = user;
     next();
-  } catch (error: any) {
+  } catch (error) {
     res
       .status(401)
       .json({ success: false, message: "Unauthorized", error: error.message });

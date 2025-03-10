@@ -1,11 +1,4 @@
-import { NextFunction, Request, Response } from "express";
-
-const errorMiddleware = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const errorMiddleware = (err, req, res, next) => {
   try {
     let error = { ...err };
     error.message = err.message;
@@ -26,7 +19,7 @@ const errorMiddleware = (
 
     // mongoose validation error
     if (err.name === "ValidationError") {
-      const message = Object.values(err.errors).map((val: any) => val.message);
+      const message = Object.values(err.errors).map((val) => val.message);
       error = new Error(message.join(". "));
       error.statusCode = 400;
     }

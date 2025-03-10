@@ -1,11 +1,11 @@
-import express, { Request, Response } from "express";
-import { PORT } from "./config/env.ts";
-import { connectDB } from "./config/database.ts";
+import express from "express";
+import { PORT } from "./config/env.js";
+import { connectDB } from "./config/database.js";
 import cookieParser from "cookie-parser";
-import authRouter from "./routes/auth.routes.ts";
-import userRouter from "./routes/user.routes.ts";
-import linkRouter from "./routes/links.routes.ts";
-import errorMiddleware from "./middlewares/error.middleware.ts";
+import authRouter from "./routes/auth.routes.js";
+import userRouter from "./routes/user.routes.js";
+import linkRouter from "./routes/links.routes.js";
+import errorMiddleware from "./middlewares/error.middleware.js";
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(errorMiddleware);
 
-app.get("/api/v1", (req: Request, res: Response) => {
+app.get("/api/v1", (req, res) => {
   res.status(200).send({
     success: true,
     message: "Welcome to my link sharing api...",

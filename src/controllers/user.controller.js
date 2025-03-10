@@ -1,13 +1,8 @@
-import { Request, Response, NextFunction } from "express";
-import User from "../model/user.model.ts";
+import User from "../model/user.model.js";
 
-export const getAllUsers = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).select("-password");
 
     res.status(200).json({
       message: "Users retrieved successfully",
@@ -19,11 +14,7 @@ export const getAllUsers = async (
   }
 };
 
-export const getUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<any> => {
+export const getUser = async (req, res, next) => {
   try {
     const id = req.params.id;
     const user = await User.findById(id).select("-password");
@@ -40,11 +31,7 @@ export const getUser = async (
   }
 };
 
-export const updateUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<any> => {
+export const updateUser = async (req, res, next) => {
   const { id } = req.params;
   const update = req.body;
   try {

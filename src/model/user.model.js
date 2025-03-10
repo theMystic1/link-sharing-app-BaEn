@@ -1,18 +1,18 @@
 import mongoose, { Document } from "mongoose";
 
-export interface IUSER extends Document {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  role: string;
-  imageUrl?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// export interface IUSER extends Document {
+//   _id: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   password: string;
+//   role: string;
+//   imageUrl?: string | null;
+//   createdAt: Date;
+//   updatedAt: Date;
+// }
 
-const userSchema = new mongoose.Schema<IUSER>(
+const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, trim: true, default: "John" },
     lastName: { type: String, trim: true, default: "Doe" },
@@ -42,5 +42,5 @@ const userSchema = new mongoose.Schema<IUSER>(
   }
 );
 
-const User = mongoose.model<IUSER>("User", userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;
